@@ -1,0 +1,11 @@
+
+
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css");
+
+@import "tailwindcss";
+
+@theme {
+    --color-purple-300: "#e0e7fe",
+    --color-purple-500: "#3e38a7",
+    --color-purple-600: "#5046e4",
+}

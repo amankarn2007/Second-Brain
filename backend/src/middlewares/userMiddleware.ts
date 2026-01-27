@@ -2,7 +2,7 @@ import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { JWT_TOKEN } from "../config/JWT_TOKEN.js";
 
-export const userMiddleware = (req: Request, res: Response, next: NextFunction) => {
+export const isLogedin = (req: Request, res: Response, next: NextFunction) => {
     try{
         const header = req.headers["authorization"]; //header se token uthaya
 

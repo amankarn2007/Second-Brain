@@ -5,7 +5,7 @@ import { userModel } from "./models/userModel.js";
 import { contentModel } from "./models/contentModel.js";
 import { genrateToken } from "./utils/genrateToken.js";
 import cookieParser from "cookie-parser";
-import { userMiddleware } from "./middlewares/userMiddleware.js";
+import { isLogedin } from "./middlewares/userMiddleware.js";
 
 
 const app = express();
@@ -64,7 +64,7 @@ app.post("/api/v1/signin", async (req, res) => {
     }
 })
 
-app.post("/api/v1/content", userMiddleware, async (req, res) => {
+app.post("/api/v1/content", isLogedin, async (req, res) => {
     try{
         const { link, type, title } = req.body;
 
@@ -85,28 +85,29 @@ app.post("/api/v1/content", userMiddleware, async (req, res) => {
 
 })
 
-app.get("/api/v1/content", userMiddleware, async (req, res) => {
+app.get("/api/v1/content", isLogedin, async (req, res) => {
     //@ts-ignore
-    const userId = req.userId; //"userMiddleware" se userId nikala ,and searched all contents
-    const contents = await contentModel.find({userId}).populate("userId");
+    const userId = req.userId; //"isLogedin" se userId nikala ,and searched all contents
+    const contents = await contentModel.find(
+        {userId}
+    ).populate("userId", "username"); //only populate username, not password
 
     res.json({
         contents,
     })
 })
 
-app.delete("/api/v1/content", userMiddleware, async (req, res) => {
+app.delete("/api/v1/content", isLogedin, async (req, res) => {
     try{
         //@ts-ignore
-        const userId = req.userId;
-        //@ts-ignore
-        const content = req.id;
+        const userId = req.userId; //through isLogedin middleware
 
-        console.log(`userID: ${userId}`);
-        console.log(`contentID: ${content}`);
-    
+        const contentId = req.body.contentId;
+        console.log(`contentId: ${contentId}`);
+
         await contentModel.findOneAndDelete({ userId });
         res.json({ message: "user deleted successfully" });
+
     } catch(err) {
         res.json({ message: "error in content deleting" });
     }
