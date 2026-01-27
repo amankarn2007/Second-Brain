@@ -85,12 +85,32 @@ app.post("/api/v1/content", userMiddleware, async (req, res) => {
 
 })
 
-app.get("/api/v1/content", (req, res) => {
-    res.send("hi");
+app.get("/api/v1/content", userMiddleware, async (req, res) => {
+    //@ts-ignore
+    const userId = req.userId; //"userMiddleware" se userId nikala ,and searched all contents
+    const contents = await contentModel.find({userId}).populate("userId");
+
+    res.json({
+        contents,
+    })
 })
 
-app.delete("/api/v1/content", (req, res) => {
-    res.send("hi");
+app.delete("/api/v1/content", userMiddleware, async (req, res) => {
+    try{
+        //@ts-ignore
+        const userId = req.userId;
+        //@ts-ignore
+        const content = req.id;
+
+        console.log(`userID: ${userId}`);
+        console.log(`contentID: ${content}`);
+    
+        await contentModel.findOneAndDelete({ userId });
+        res.json({ message: "user deleted successfully" });
+    } catch(err) {
+        res.json({ message: "error in content deleting" });
+    }
+
 })
 
 app.post("/api/v1/brain/share", (req, res) => {

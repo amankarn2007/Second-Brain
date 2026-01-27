@@ -4,15 +4,16 @@ import { JWT_TOKEN } from "../config/JWT_TOKEN.js";
 
 export const userMiddleware = (req: Request, res: Response, next: NextFunction) => {
     try{
-        const header = req.headers["authorization"]; //header se token uthaya, token me 
+        const header = req.headers["authorization"]; //header se token uthaya
 
         if(!header){
             return res.status(403).json({ message: "token mising" });
         }
 
+        // header = logedin time token
         const decoded = jwt.verify(header as string, JWT_TOKEN); //token 
     
-        if(decoded){ //function
+        if(decoded){
             //@ts-ignore
             req.userId = decoded.id;
             next();
