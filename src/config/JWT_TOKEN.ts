@@ -1,0 +1,1 @@
+export const JWT_TOKEN = "15a3201551!##sldkfm";
