@@ -5,12 +5,25 @@ function App() {
   
 
   return (
-    <div>
+    <div className="m-6 gap-6">
       <Button 
       variant={"primary"} 
+      size={"sm"} 
+      text={"Share Brain"} 
+      startIcon={<span className="material-symbols-outlined">share</span>}
+      onClick={() => "asdf"} />
+
+      <Button 
+      variant={"secondary"} 
       size={"md"} 
       text={"Share Brain"} 
-      startIcon={<i className="fa-solid fa-share-nodes"></i>}
+      onClick={() => "asdf"} />
+
+      <Button 
+      variant={"primary"} 
+      size={"lg"} 
+      text={"Share Brain"} 
+      startIcon={<span className="material-symbols-outlined">share</span>}
       onClick={() => "asdf"} />
     </div>
   )

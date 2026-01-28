@@ -1,11 +1,13 @@
-
+/*google icons cdn link*/
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200");
 
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css");
 
 @import "tailwindcss";
 
 @theme {
-    --color-purple-300: "#e0e7fe",
-    --color-purple-500: "#3e38a7",
-    --color-purple-600: "#5046e4",
+    --color-purple-300: #e0e7fe;
+    --color-purple-350: #c7d0e8;
+    --color-purple-500: #3e38a7;
+    --color-purple-600: #5046e4;
 }
