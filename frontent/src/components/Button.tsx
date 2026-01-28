@@ -16,11 +16,11 @@ const variantStyle = {
 
 const sizeStyle = {
     "sm": "px-2 py-3",
-    "md": "px-4 py-3 text-xl",
-    "lg": "py-4 text-2xl"
+    "md": "px-3 py-2 text-xl",
+    "lg": "px-4 py-2 text-2xl"
 }
 
-const defaultStyle = "rounded-lg m-4 w-42 cursor-pointer";
+const defaultStyle = "rounded-lg m-4 cursor-pointer";
 
 function Button(props: ButtonProps) {
 
@@ -28,7 +28,7 @@ function Button(props: ButtonProps) {
         <button className={`${variantStyle[props.variant]} ${sizeStyle[props.size]} ${defaultStyle}`} 
         onClick={props.onClick}>
 
-            <div className="w-full flex justify-center items-center">
+            <div className="w-full flex justify-center items-center font-">
                 { props.startIcon &&
                     <div className="flex items-center mr-2"> 
                         { props.startIcon } 

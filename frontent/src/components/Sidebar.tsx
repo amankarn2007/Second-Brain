@@ -1,0 +1,46 @@
+import type React from "react"
+
+
+export function Sidebar() {
+    return(
+        <div className="h-screen w-80 bg-white flex flex-col z-1 shadow-xl">
+            {/*logo*/}
+            <div className=" w-full flex items-center py-2">
+                <span className="material-symbols-outlined text-5xl! text-blue-700 ml-5">neurology</span>
+                <h2 className="text-2xl font-medium ml-2">Second Brain</h2>
+
+                <div className="bg-blue-50 p-1 rounded-4xl hover:text-lg opacity-50 hover:opacity-100 cursor-pointer ml-7">
+                    <i className="fa-solid fa-xmark"></i>
+                </div>
+
+            </div>
+
+            {/*sidebar content*/}
+            <div className="flex flex-col mt-5">
+                <SidebarContent title="Tweets" icon={<i className="fa-brands fa-twitter"></i>} />
+
+                <SidebarContent title="Videos" icon={<i className="fa-brands fa-youtube"></i>} />
+
+                <SidebarContent title="Documents" icon={<i className="fa-regular fa-file-lines"></i>} />
+
+                <SidebarContent title="Links" icon={<span className="material-symbols-outlined">link</span>} />
+
+                <SidebarContent title="Tags" icon={<i className="fa-solid fa-hashtag"></i>} />
+            </div>
+        </div>
+    )
+}
+
+interface sidebarProps {
+    title: string, 
+    icon: React.ReactNode
+}
+
+function SidebarContent({title, icon}: sidebarProps) {
+    return(
+        <div className="flex items-center text-xl py-3 px-8 hover:bg-blue-50 rounded-xl">  
+            { icon }
+            <p className="pl-4"> { title } </p>
+        </div>
+    )
+}

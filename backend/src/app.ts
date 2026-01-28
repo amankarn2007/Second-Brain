@@ -6,6 +6,8 @@ import { contentModel } from "./models/contentModel.js";
 import { genrateToken } from "./utils/genrateToken.js";
 import cookieParser from "cookie-parser";
 import { isLogedin } from "./middlewares/userMiddleware.js";
+import { LinkModel } from "./models/LinkModel.js";
+import { randomString } from "./utils/genrateLink.js";
 
 
 const app = express();
@@ -114,12 +116,72 @@ app.delete("/api/v1/content", isLogedin, async (req, res) => {
 
 })
 
-app.post("/api/v1/brain/share", (req, res) => {
-    res.send("hi");
+app.post("/api/v1/brain/share", isLogedin, async(req, res) => {
+    const share = req.body.share;
+
+    if(share) {
+
+        const existingLink = await LinkModel.findOne({ 
+            userId: (req as any).userId 
+        })
+
+        if(existingLink){
+            return res.json({ 
+                message: "Link already exists =>  /brain/" + existingLink.hash 
+            });
+        }
+
+        const hashedString = randomString(10);
+        await LinkModel.create({ //LinkModel needs userId and hashed link
+            userId: (req as any).userId,
+            hash: hashedString,
+        })
+
+        res.json({
+            message: "/brain/" + hashedString,
+        })
+
+    } else {
+        await LinkModel.deleteOne({
+            userId: (req as any).userId,
+        })
+
+        res.json({
+            message: "Link removed"
+        })
+    }
 })
 
-app.get("/api/v1/brain/:shareLink", (req, res) => {
-    res.send("hi");
+app.get("/api/v1/brain/:shareLink",  async (req, res) => {
+    const hash = req.params.shareLink;
+
+    const link = await LinkModel.findOne({hash});
+
+    if(!link){
+        return res.json({
+            message: "Sorry Incorrect Input",
+        })
+    }
+
+    const content = await contentModel.find({ //link se content find
+        userId: link.userId,
+    })
+
+    const user = await userModel.findOne({ //link se user find
+        _id: link.userId,
+    })
+
+    if(!user){
+        return res.json({
+            message: "User not found"
+        })
+    }
+
+    res.json({
+        username: user.username,
+        content: content,
+    })
+    
 })
 
 // Start the server
