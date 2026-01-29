@@ -4,15 +4,17 @@ interface cardProps {
     heading?: string,
     description?: string,
     tags?: string,
+    type: "notes" | "youtube" | "x",
+    link?: string,
 }
 
 function Card(props: cardProps) {
     return(
-        <div className="h-90 w-72 bg-white rounded-2xl px-4 mr-6 border border-gray-300 shadow-xl">
-            <div className="flex justify-between items-center py-3  text-lg">
+        <div className="h-98 w-72 bg-white rounded-2xl px-4 mr-6 border border-gray-300 shadow-xl">
+            <div className="flex justify-between items-center py-3 text-lg">
                 <div className="flex items-center ">
                     <i className="fa-regular fa-file-lines"></i>
-                    <p className="px-2"> Project Ideas </p>
+                    <p className="px-2"> { props.projectName } </p>
                 </div>
                 <div className="flex justify-center items-center cursor-pointer">
                     <i className="fa-solid fa-share-nodes opacity-70 hover:opacity-100"></i>
@@ -20,12 +22,36 @@ function Card(props: cardProps) {
                 </div>
             </div>
 
-            { props.heading &&
-                <h2 className="text-2xl font-bold py-1"> {props.heading} </h2>
+            {  props.type === "notes" &&
+                <>
+                    {  props.heading && 
+                        <h2 className="text-2xl font-bold py-1"> {props.heading} </h2>
+                    }
+    
+                    {  props.description && 
+                        <h2 className="py-1 mt-4"> {props.description} </h2>
+                    }
+                </>
             }
 
-            { props.description && <h2 className="py-1"> {props.description} </h2> }
+            {  props.type === "youtube" &&
+                <iframe className="w-full h-38 rounded-lg" 
+                    src={props.link ? linkEbeder({ link: props.link }) : ""}
+                    //https://youtu.be/xTtL8E4LzTQ?si=C2q0F74INzJ8I1HW
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    referrerPolicy="strict-origin-when-cross-origin" 
+                    allowFullScreen>
+                </iframe>
+            }
 
+            {  props.type === "x" &&
+                <div className="w-full max-h-60 overflow-y-auto no-scrollbar rounded-lg no-scrollbar">
+                    <blockquote className="twitter-tweet">
+                        <a href={props.link?.replace("x.com", "twitter.com")}></a>
+                    </blockquote>
+                </div>
+            }
 
             <div className="flex py-3">
                 <Tags tags={props.tags} />
@@ -61,4 +87,15 @@ function CustomDate() {
     return(
         <p> {date}/{month}/{year} </p>
     )
+}
+
+function linkEbeder(props: {link: string}) {
+    //catch youtube main link from given link
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = props.link.match(regExp);
+
+    if (match && match[2].length === 11) {
+        return `https://www.youtube.com/embed/${match[2]}?controls=0`;
+    }
+    return ""; // Agar link galat ho
 }
