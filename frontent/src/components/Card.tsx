@@ -76,16 +76,16 @@ function Tags(props: { tags: string | undefined }) {
 }
 
 function CustomDate() {
-    let date = new String(new Date().getMonth() + 1);
-    const month = new Date().getDate();
+    const date = new Date().getDate();
+    let month = new String(new Date().getMonth() + 1);
     const year = new Date().getFullYear();
 
-    if(date.length === 1 ){
-        date = "0" + date;
+    if(month.length === 1 ){
+        month = "0" + month;
     }
 
     return(
-        <p> {date}/{month}/{year} </p>
+        <span> {date}/{month}/{year} </span>
     )
 }
 

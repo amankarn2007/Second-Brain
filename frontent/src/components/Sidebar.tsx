@@ -24,7 +24,7 @@ export function Sidebar(props: sidebarInterface) {
             </div>
 
             {/*sidebar content*/}
-            <div className="flex flex-col mt-5">
+            <div className="flex flex-col mt-5 cursor-pointer">
                 <SidebarContent title="Tweets" icon={<i className="fa-brands fa-twitter"></i>} />
 
                 <SidebarContent title="Videos" icon={<i className="fa-brands fa-youtube"></i>} />

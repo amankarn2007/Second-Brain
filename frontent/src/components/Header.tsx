@@ -4,6 +4,8 @@ import { type Dispatch, type SetStateAction } from "react"
 interface headerProps{
   isOpen: boolean,
   setOpen: Dispatch<SetStateAction<boolean>>
+  setPopup: Dispatch<SetStateAction<boolean>>
+  setShare: Dispatch<SetStateAction<boolean>>
 }
 
 function Header(props: headerProps) {
@@ -21,12 +23,12 @@ function Header(props: headerProps) {
       <div className="flex items-center">
         <Button variant="primary" size="md" text="Share Brain" 
           startIcon={<span className="material-symbols-outlined">share</span>} 
-          onClick={() => ""} 
+          onClick={() => props.setShare(prev => !prev)} 
         />
 
         <Button variant="secondary" size="md" text="Add Content" 
           startIcon={<i className="fa-solid fa-plus"></i>} 
-          onClick={() => ""} 
+          onClick={() => props.setPopup(prev => !prev)} 
         />
       </div>
       
