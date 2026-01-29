@@ -1,15 +1,23 @@
+import type { Dispatch, SetStateAction } from "react"
 import type React from "react"
 
+interface sidebarInterface{
+    isOpen: boolean;
+    setOpen: Dispatch<SetStateAction<boolean>>;
+}
 
-export function Sidebar() {
+export function Sidebar(props: sidebarInterface) {
     return(
+        props.isOpen ?
         <div className="h-screen w-80 bg-white flex flex-col z-1 shadow-xl">
             {/*logo*/}
             <div className=" w-full flex items-center py-2">
                 <span className="material-symbols-outlined text-5xl! text-blue-700 ml-5">neurology</span>
                 <h2 className="text-2xl font-medium ml-2">Second Brain</h2>
 
-                <div className="bg-blue-50 p-1 rounded-4xl hover:text-lg opacity-50 hover:opacity-100 cursor-pointer ml-7">
+                <div className="bg-blue-50 p-1 rounded-4xl hover:text-lg opacity-50 hover:opacity-100 cursor-pointer ml-7" onClick={() => 
+                    props.setOpen(!props.setOpen)
+                }>
                     <i className="fa-solid fa-xmark"></i>
                 </div>
 
@@ -27,7 +35,7 @@ export function Sidebar() {
 
                 <SidebarContent title="Tags" icon={<i className="fa-solid fa-hashtag"></i>} />
             </div>
-        </div>
+        </div> : <div></div>
     )
 }
 

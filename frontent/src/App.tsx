@@ -1,18 +1,18 @@
+import { useState } from "react"
 import "./App.css"
-import Button from "./components/Button"
+import Header from "./components/Header"
 import Card from "./components/Card"
 import { Sidebar } from "./components/Sidebar"
 
 function App() {
-  
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="h-screen w-full flex">
-      <Sidebar />
+      <Sidebar isOpen={open} setOpen={setOpen} />
 
-      <main className="flex-1 bg-white flex-col">
-        <Header />
-
+      <main className="flex-1 bg-white flex-col px-2">
+        <Header isOpen={open} setOpen={setOpen} />
         <Content />
       </main>
 
@@ -22,27 +22,6 @@ function App() {
 
 export default App
 
-
-function Header() {
-  return(
-    <div className="flex justify-between items-center px-12 py-2">
-      <h1 className="text-3xl font-medium">All Notes</h1>
-
-      <div className="flex items-center">
-        <Button variant="primary" size="md" text="Share Brain" 
-          startIcon={<span className="material-symbols-outlined">share</span>} 
-          onClick={() => ""} 
-        />
-
-        <Button variant="secondary" size="md" text="Add Content" 
-          startIcon={<i className="fa-solid fa-plus"></i>} 
-          onClick={() => ""} 
-        />
-      </div>
-      
-    </div>
-  )
-}
 
 function Content() {
   return(
