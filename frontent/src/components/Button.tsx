@@ -7,7 +7,7 @@ interface ButtonProps {
     startIcon?: ReactElement;
     endIcon?: ReactElement;
     onClick: () => void;
-    width?: number
+    width?: number;
 }
 
 const variantStyle = {
@@ -26,8 +26,8 @@ const defaultStyle = "rounded-lg m-4 cursor-pointer";
 function Button(props: ButtonProps) {
 
     return(
-        <button className={`${variantStyle[props.variant]} ${sizeStyle[props.size]} 
-        ${defaultStyle} w-${props.width}`} onClick={props.onClick}>
+        <button className={`${variantStyle[props.variant]} ${sizeStyle[props.size]} ${defaultStyle}`} 
+        onClick={props.onClick} style={{ width: props.width ? `${props.width * 0.25}rem` : 'auto' }}>
 
             <div className="w-full flex justify-center items-center font-">
                 { props.startIcon &&

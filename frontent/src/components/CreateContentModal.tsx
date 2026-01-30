@@ -17,7 +17,7 @@ export function CreateContentModal({popup, setPopup}: ModalProps){
                     <i className="fa-solid fa-xmark scale-100 hover:scale-125 transition-transform cursor-pointer" onClick={() => setPopup(!popup)}></i>
                 </div>
 
-                <div className="py-5">
+                <div className="py-2">
                     <InputBox />
                 </div>
             </div>

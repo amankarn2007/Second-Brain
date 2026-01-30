@@ -1,30 +1,24 @@
-import { useState } from "react"
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css"
-import Header from "./components/Header"
-import Content from "./components/Content"
-import { Sidebar } from "./components/Sidebar"
-import { CreateContentModal } from "./components/CreateContentModal"
-import ShareContentModal from "./components/ShareContentModal"
+import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import LandingPage from "./pages/LandingPage";
+
 
 function App() {
-  const [open, setOpen] = useState(true);
-  const [popup, setPopup] = useState(false);
-  const [share, setShare] = useState(false);
-
-  return (
-    <div className="h-screen w-full flex">
-      <ShareContentModal share={share} setShare={setShare} />
-      <CreateContentModal popup={popup} setPopup={setPopup} />
-
-      <Sidebar isOpen={open} setOpen={setOpen} />
-
-      <main className="flex-1 bg-white flex-col px-2">
-        <Header isOpen={open} setOpen={setOpen} setPopup={setPopup} setShare={setShare} />
-        <Content />
-      </main>
-
+  return(
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   )
 }
 
-export default App
+export default App;
