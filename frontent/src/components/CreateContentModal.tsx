@@ -1,5 +1,7 @@
 import { type Dispatch, type SetStateAction } from "react";
 import InputBox from "./InputBox";
+import axios from "axios";
+import { BACKEND_URL } from "../Config";
 
 interface ModalProps{
     popup: boolean,
@@ -8,6 +10,27 @@ interface ModalProps{
 
 //controlled component
 export function CreateContentModal({popup, setPopup}: ModalProps){
+
+    async function addContent(recievedData: any) {
+        const type = recievedData.type;
+        const title = recievedData.title;
+        const link = recievedData.link;
+        const tags = recievedData.tags;
+
+        await axios.post(`${BACKEND_URL}/api/v1/content`, { //send req to add content
+            type,
+            title,
+            link,
+            tags,
+        }, {
+            headers: {
+                "Authorization": localStorage.getItem("token"), //have to send token for authorisation
+            }
+        })
+        
+        alert("Notes added successfully");
+    }
+
 
     return(
         popup && 
@@ -18,7 +41,9 @@ export function CreateContentModal({popup, setPopup}: ModalProps){
                 </div>
 
                 <div className="py-2">
-                    <InputBox />
+                    {/*jsb submit button click hoga to handleSubmit function input catch krke data me store karke "onAdd" ke through data dega. */}
+                    <InputBox onAdd={addContent} setPopup={setPopup} />
+                    {/* yaha hame "InputBox" ko addContent khali dabba bheja "onAdd props" ke through, child ne data store krke addContent me data bhar diya aur wapas  kar diya. */}
                 </div>
             </div>
         </div>

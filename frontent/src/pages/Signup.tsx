@@ -1,9 +1,31 @@
+import { useRef } from "react";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { BACKEND_URL } from "../Config";
+
 
 function Signup() {
     let navigate = useNavigate();
+    const userNameRef = useRef<any>(""); //to store usrname & password from Input
+    const passwordRef = useRef<any>("");
+
+    async function signup() {
+        const username = userNameRef.current.value;
+        console.log(username);
+        const password = passwordRef.current.value;
+
+        await axios.post(`${BACKEND_URL}/api/v1/signup`, { //send req to backend
+            username,
+            password
+        })
+        
+        alert("you have signed up");
+        //show success signed up
+
+        navigate("/login")
+    }
 
     return (
         <div className="h-screen w-full flex justify-center items-center bg-gray-50">
@@ -22,12 +44,12 @@ function Signup() {
 
                     <div>
                         <label className="text-sm font-medium text-gray-700 ml-1 mb-1 block">Username</label>
-                        <Input placeholder="johndoe123" width={92} />
+                        <Input ref={userNameRef} placeholder="johndoe123" width={92} />
                     </div>
                 
                     <div>
                         <label className="text-sm font-medium text-gray-700 ml-1 mb-1 block">Password</label>
-                        <Input placeholder="••••••••" type="password" width={92} />
+                        <Input ref={passwordRef} placeholder="••••••••" type="password" width={92} />
                     </div>
                 </div>
 
@@ -37,7 +59,7 @@ function Signup() {
                         size="md" 
                         text="Sign Up" 
                         width={90}
-                        onClick={() => ""} 
+                        onClick={signup} 
                     />
                     
                     <p className="text-md text-gray-600">

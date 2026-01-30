@@ -10,17 +10,14 @@ const contentSchema = new Schema({
     },
     type: { 
         type: String,
-        enum: contentTypes, 
+        enum: ['notes', 'x', 'youtube'], 
         required: true 
     },
     title: { 
         type: String,
         required: true
     },
-    //tags: [{ 
-    //    type: Schema.Types.ObjectId, 
-    //    ref: 'Tag'
-    //}],
+    tags: [{type: String}],
     userId: {
         type: Schema.Types.ObjectId,
         ref: "User",

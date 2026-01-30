@@ -8,10 +8,11 @@ import cookieParser from "cookie-parser";
 import { isLogedin } from "./middlewares/userMiddleware.js";
 import { LinkModel } from "./models/LinkModel.js";
 import { randomString } from "./utils/genrateLink.js";
-
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
+app.use(cors()); //accept api req from frontent
 
 app.post("/api/v1/signup", async (req, res) => {
     try{
@@ -29,12 +30,13 @@ app.post("/api/v1/signup", async (req, res) => {
             username: username,
             password: password,
         })
-    
+        console.log(user);
+        
         res.json({
             message: "user signed up",
         });
     } catch(err) {
-        console.log("error catched in signup endpoint");
+        console.log("error catched in signup endpoint", err);
     }
 })
 
@@ -62,19 +64,19 @@ app.post("/api/v1/signin", async (req, res) => {
         })
 
     } catch(err) {
-        console.log("error catched in signin endpoint");
+        console.log("error catched in signin endpoint", err);
     }
 })
 
 app.post("/api/v1/content", isLogedin, async (req, res) => {
     try{
-        const { link, type, title } = req.body;
+        const { link, type, title, tags } = req.body;
 
         const createContent = await contentModel.create({
             link,
             type,
             title,
-            //tags,
+            tags,
             //@ts-ignore
             userId: req.userId,
         })
@@ -82,7 +84,7 @@ app.post("/api/v1/content", isLogedin, async (req, res) => {
         res.json({ createContent });
 
     } catch(err){
-        return res.send({message: "error in content endpoint"});
+        return res.send({message: `error in content endpoint, ${err}`});
     }
 
 })

@@ -1,9 +1,32 @@
+import { useRef } from "react";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { BACKEND_URL } from "../Config";
 
 function Login() {
     let navigate = useNavigate();
+
+    const userNameRef = useRef<any>(""); //to store usrname & password from Input
+    const passwordRef = useRef<any>("");
+
+    async function login() {
+        const username = userNameRef.current.value;
+        console.log(username);
+        const password = passwordRef.current.value;
+
+        const response = await axios.post(`${BACKEND_URL}/api/v1/signin`, { //req to backend
+            username,
+            password
+        })
+        //console.log(response);
+
+        const jwt = response.data.token;
+        localStorage.setItem("token", jwt);  //set the jwt token
+
+        navigate("/dashboard")
+    }
 
     return (
         <div className="h-screen w-full flex justify-center items-center bg-gray-50">
@@ -17,12 +40,12 @@ function Login() {
                 <div className="space-y-4 mb-8">
                     <div>
                         <label className="text-sm font-medium text-gray-700 ml-1 mb-1 block">Username</label>
-                        <Input placeholder="johndoe123" width={92} />
+                        <Input ref={userNameRef} placeholder="johndoe123" width={92} />
                     </div>
                 
                     <div>
                         <label className="text-sm font-medium text-gray-700 ml-1 mb-1 block">Password</label>
-                        <Input placeholder="••••••••" type="password" width={92} />
+                        <Input ref={passwordRef} placeholder="••••••••" type="password" width={92} />
                     </div>
                 </div>
 
@@ -32,7 +55,7 @@ function Login() {
                         size="md" 
                         text="Sign Up" 
                         width={90}
-                        onClick={() => ""} 
+                        onClick={login} 
                     />
                     
                     <p className="text-md text-gray-600">

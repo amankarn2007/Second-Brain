@@ -1,6 +1,6 @@
+import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import { type Dispatch, type SetStateAction } from "react"
-import { useNavigate } from "react-router-dom";
 interface headerProps{
   isOpen: boolean,
   setOpen: Dispatch<SetStateAction<boolean>>
@@ -9,7 +9,13 @@ interface headerProps{
 }
 
 function Header(props: headerProps) {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+
+  function signout() {
+    localStorage.setItem("token", ""); //remove token
+    navigate("/"); //redirect to home
+  }
+
 
   return(
     <div className="flex justify-between items-center pr-12 pl-4 py-2">
@@ -34,7 +40,9 @@ function Header(props: headerProps) {
           onClick={() => props.setPopup(prev => !prev)} 
         />
 
-        <div className="pl-2 hover:underline" onClick={() => navigate("/")}>
+        <div 
+        className="pl-2 hover:underline" 
+        onClick={signout}>
           <label className="text-xl text-blue-800">Logout</label>
           <i className="fa-solid fa-arrow-right-from-bracket px-2"></i>
         </div>
