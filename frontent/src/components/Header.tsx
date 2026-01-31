@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import { type Dispatch, type SetStateAction } from "react"
+
 interface headerProps{
   isOpen: boolean,
   setOpen: Dispatch<SetStateAction<boolean>>
@@ -12,13 +13,13 @@ function Header(props: headerProps) {
   const navigate = useNavigate();
 
   function signout() {
-    localStorage.setItem("token", ""); //remove token
+    localStorage.removeItem("token"); //remove token
     navigate("/"); //redirect to home
   }
 
 
   return(
-    <div className="flex justify-between items-center pr-12 pl-4 py-2">
+    <div className="flex w-full justify-between items-center pr-12 pl-4 py-2 sticky top-0 bg-white z-5 border-b border-gray-200">
 
       <div className="flex items-center">
         { !props.isOpen && 

@@ -4,7 +4,8 @@ import Input from "./Input";
 
 interface InputBoxInterface{
     onAdd: (data: any) => void;
-    setPopup: Dispatch<SetStateAction<boolean>>;
+    setPopup: Dispatch<SetStateAction<boolean>>; //Create Modal "popup"
+    //refresh: () => void;
 }
 
 function InputBox(props: InputBoxInterface) {
@@ -14,7 +15,7 @@ function InputBox(props: InputBoxInterface) {
     const tagRef = useRef<HTMLInputElement>(null);
 
 
-    function handleSubmit() {
+    async function handleSubmit() {
         //sare refs ka input nikal ke "Data" me insert kar diya
         const Data = {
             type: typeRef.current?.value,
@@ -23,8 +24,13 @@ function InputBox(props: InputBoxInterface) {
             tags: tagRef.current?.value,
         }
 
-        props.onAdd(Data); //send data to parent in where "InputBox Component" is used
+        //send data from Input Box to "CreateContent Modal" where they call backend to add data.
+        await props.onAdd(Data); //send data to parent in where "InputBox Component" is used
+
         props.setPopup(prev => !prev); //close the CreateContent Modal
+
+        //fetch new content, when submit button clicked
+        //props.refresh();
     }
 
 
