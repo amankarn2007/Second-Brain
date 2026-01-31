@@ -1,3 +1,5 @@
+import axios from "axios";
+import { BACKEND_URL } from "../Config";
 
 interface cardProps {
     projectName: string,
@@ -6,9 +8,31 @@ interface cardProps {
     tags?: string,
     type: "notes" | "youtube" | "x",
     link?: string,
+    id? : string,
+    refresh: () => void,
 }
 
 function Card(props: cardProps) {
+    
+    async function deleteHandler() {
+        try{
+            const contentId = props.id;
+            //console.log(props.id);
+    
+            await axios.delete(`${BACKEND_URL}/api/v1/content/${contentId}`, {
+                headers: {
+                    "Authorization": localStorage.getItem("token")
+                }
+            });
+            
+            props.refresh(); //refetch the updated content
+            
+            console.log("Deleted Successfully");
+        } catch(err) {
+            console.log("Error in deleting content", err);
+        }
+    }
+
     return(
         <div className="h-98 w-72 bg-white rounded-2xl px-4 mr-12 mt-5 border border-gray-300 shadow-xl">
             <div className="flex justify-between items-center py-3 text-lg">
@@ -18,7 +42,8 @@ function Card(props: cardProps) {
                 </div>
                 <div className="flex justify-center items-center cursor-pointer">
                     <i className="fa-solid fa-share-nodes opacity-70 hover:opacity-100"></i>
-                    <span className="material-symbols-outlined px-2 opacity-70 hover:opacity-100">delete</span>
+                    <span className="material-symbols-outlined px-2 opacity-70 hover:opacity-100" 
+                    onClick={deleteHandler}>delete</span>
                 </div>
             </div>
 

@@ -31,7 +31,7 @@ export function CreateContentModal({popup, setPopup, refresh}: ModalProps){
         
         alert("Notes added successfully");
 
-        refresh();
+        refresh(); //refresh the content
         
         console.log(response.data);
         return response.data; //when InoutBox added "Data" in onAdd, addContent runs. aur ye return 'InputBox' ko bata raha hai ki kaam khatam!. tab InputBox ka "await onAdd" khatam hoga.

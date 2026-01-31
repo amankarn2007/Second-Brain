@@ -1,8 +1,13 @@
 import Card from "./Card"
 
-function Content({content}: any) {
+interface ContentInterface{
+  content: any,
+  refresh: () => void,
+}
+
+function Content({content, refresh}: ContentInterface) {
   
-  //console.log(content);
+  console.log(content);
 
   return(
     <div className="pt-2 px-12 flex flex-wrap">
@@ -31,12 +36,14 @@ function Content({content}: any) {
 
       { content && content.length > 0 ? (
           content.map((data: any) => (
-            <Card 
-              key={data._id}
+            <Card
+              key={data._id} //every map child should have unique id
+              id={data._id}
               projectName={data.title}
               tags={data.tags} 
               type={data.type}
               link={data.link}
+              refresh={refresh}
             />
           ))
         ) : <p className="mt-10 text-lg">No content avilable</p>

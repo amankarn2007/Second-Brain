@@ -101,15 +101,15 @@ app.get("/api/v1/content", isLogedin, async (req, res) => {
     })
 })
 
-app.delete("/api/v1/content", isLogedin, async (req, res) => {
+app.delete("/api/v1/content/:contentId", isLogedin, async (req, res) => {
     try{
         //@ts-ignore
         const userId = req.userId; //through isLogedin middleware
 
-        const contentId = req.body.contentId;
-        console.log(`contentId: ${contentId}`);
+        const { contentId } = req.params;
+        //console.log(`contentId: ${contentId}`);
 
-        await contentModel.findOneAndDelete({ userId });
+        await contentModel.findByIdAndDelete(contentId);
         res.json({ message: "user deleted successfully" });
 
     } catch(err) {

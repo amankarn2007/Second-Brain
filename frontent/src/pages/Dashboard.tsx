@@ -23,7 +23,7 @@ function Dashboard() {
 
       <main className="flex-1 bg-white flex-col px-2 overflow-y-scroll">
         <Header isOpen={open} setOpen={setOpen} setPopup={setPopup} setShare={setShare} />
-        <Content content={content} />
+        <Content content={content} refresh={fetch}/>
       </main>
 
     </div>

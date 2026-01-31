@@ -14,7 +14,7 @@ function FetchContent() {
                 }
                     
             })
-            console.log(response.data);
+            //console.log(response.data);
             setContent(response.data.contents); //set the fetched data
         } catch(err) {
             console.log("fetch failed", err);
