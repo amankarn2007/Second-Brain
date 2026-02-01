@@ -13,6 +13,8 @@ function InputBox(props: InputBoxInterface) {
     const titleRef = useRef<HTMLInputElement>(null);
     const linkRef = useRef<HTMLInputElement>(null);
     const tagRef = useRef<HTMLInputElement>(null);
+    const headingRef = useRef<HTMLInputElement>(null);
+    const descriptionRef = useRef<HTMLInputElement>(null);
 
 
     async function handleSubmit() {
@@ -22,6 +24,8 @@ function InputBox(props: InputBoxInterface) {
             title: titleRef.current?.value,
             link: linkRef.current?.value,
             tags: tagRef.current?.value,
+            heading: headingRef.current?.value,
+            description: descriptionRef.current?.value,
         }
 
         //send data from Input Box to "CreateContent Modal" where they call backend to add data.
@@ -35,8 +39,8 @@ function InputBox(props: InputBoxInterface) {
 
 
     return (
-        <div className="flex flex-col items-center p-4">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Add New Content</h2>
+        <div className="flex flex-col items-center px-4">
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">Add New Content</h2>
             
             <div className="w-full max-w-md space-y-4">
                 {/* Type Selection */}
@@ -61,13 +65,23 @@ function InputBox(props: InputBoxInterface) {
                     <Input ref={linkRef} placeholder="https://..." width={112} />
                 </div>
 
-                <div className="flex flex-col gap-1.5 pb-4">
+                <div className="flex flex-col gap-1.5">
+                    <label className="text-sm font-medium text-gray-600 ml-1">Heading</label>
+                    <Input ref={headingRef} placeholder="Enter your heading" width={112} />
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                    <label className="text-sm font-medium text-gray-600 ml-1">Description</label>
+                    <Input ref={descriptionRef} placeholder="Enter you description" width={112} />
+                </div>
+
+                <div className="flex flex-col gap-1.5 ">
                     <label className="text-sm font-medium text-gray-600 ml-1">Tags</label>
                     <Input ref={tagRef} placeholder="tech, productivity, ideas" width={112} />
                 </div>
 
                 {/* Submit Button Container */}
-                <div className="flex justify-center pt-2">
+                <div className="flex justify-center">
                     <Button 
                         variant="secondary" 
                         size="md" 

@@ -41,9 +41,7 @@ function Header(props: headerProps) {
           onClick={() => props.setPopup(prev => !prev)} 
         />
 
-        <div 
-        className="pl-2 hover:underline" 
-        onClick={signout}>
+        <div className="pl-2 hover:underline" onClick={signout}>
           <label className="text-xl text-blue-800">Logout</label>
           <i className="fa-solid fa-arrow-right-from-bracket px-2"></i>
         </div>

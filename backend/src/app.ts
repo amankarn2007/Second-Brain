@@ -70,13 +70,15 @@ app.post("/api/v1/signin", async (req, res) => {
 
 app.post("/api/v1/content", isLogedin, async (req, res) => {
     try{
-        const { link, type, title, tags } = req.body;
+        const { link, type, title, heading, description , tags } = req.body;
 
         const createContent = await contentModel.create({
             link,
             type,
             title,
             tags,
+            heading,
+            description,
             //@ts-ignore
             userId: req.userId,
         })
@@ -156,6 +158,7 @@ app.post("/api/v1/brain/share", isLogedin, async(req, res) => { //used to genrat
 })
 
 app.get("/api/v1/brain/:shareLink",  async (req, res) => {
+    //shareLink se "LinkModel" find karenge jisme user id aur hash hai, user id se user aur content find karenge
     const hash = req.params.shareLink;
 
     const link = await LinkModel.findOne({hash});
@@ -185,6 +188,73 @@ app.get("/api/v1/brain/:shareLink",  async (req, res) => {
         content: content,
     })
     
+})
+
+app.post("/api/v1/brain/notes/:contentId", isLogedin, async(req, res) => { //used to genrate single notes link
+    const share = req.body.share; //true or false.  ye link delete ke baad content nahi dega. for security
+    const contentLink = (req as any).params.contentId; //api link me hi content id hai
+
+    try{
+        if(share) {
+
+            const existingLink = await LinkModel.findOne({ //agar link already gen hai
+                contentId: contentLink,
+                userId: (req as any).userId,
+            })
+
+            if(existingLink){ //link return kardo
+                return res.json({
+                    message: "Link already exists",
+                    link: "/brain/notes/" + existingLink.hash 
+                });
+            }
+
+            const hashedString = randomString(25);
+            //LinkModel needs userId and hashed link and content id for one note link genration. yaha ham sirf contentId se bhi Link genrate kar skte hai, but for extra security and information, userId bhi de rhe
+            await LinkModel.create({
+                userId: (req as any).userId, //for extra information
+                hash: hashedString,
+                contentId: contentLink, //isi se ham user aur content find karenge
+            })
+
+            res.json({
+                link: "/brain/notes/" + hashedString,
+            })
+
+        } else { //if share is false, delete old link
+            await LinkModel.deleteOne({
+                userId: (req as any).userId,
+            })
+
+            res.json({
+                message: "Link removed"
+            })
+        }
+    } catch(err) {
+        res.json({
+            message: "error in genrating link"
+        })
+    }
+})
+
+app.get("/api/v1/brain/notes/:shareLink", async(req, res) => {
+    try{
+        const shareLink = req.params.shareLink;
+    
+        const link = await LinkModel.findOne({hash: shareLink}); //link find karo
+        if(!link) return res.json({message: "token is missong"});
+
+        const content = await contentModel.findOne({
+            _id: link.contentId,
+            userId: link.userId,
+        })
+
+        if(!content) return res.json({message: "Content not found"});
+        
+        res.send(content);
+    } catch(err) {
+        res.send("error is searching link");
+    }
 })
 
 // Start the server

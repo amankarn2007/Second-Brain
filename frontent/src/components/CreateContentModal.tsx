@@ -17,12 +17,18 @@ export function CreateContentModal({popup, setPopup, refresh}: ModalProps){
         const title = recievedData.title;
         const link = recievedData.link;
         const tags = recievedData.tags;
+        const heading = recievedData.heading;
+        const description = recievedData.description;
+
+        console.log(type, title, link, tags, heading, description)
 
         const response = await axios.post(`${BACKEND_URL}/api/v1/content`, { //send req to add content
             type,
             title,
             link,
             tags,
+            heading,
+            description,
         }, {
             headers: {
                 "Authorization": localStorage.getItem("token"), //have to send token for authorisation
@@ -42,7 +48,7 @@ export function CreateContentModal({popup, setPopup, refresh}: ModalProps){
         popup && 
         <div className="h-screen w-screen fixed top-0 left-0 z-10 backdrop-blur-xs flex justify-center items-center">
             <div className=" rounded-xl w-135 h-170 bg-white border border-gray-300">
-                <div className="flex justify-end p-5">
+                <div className="flex justify-end pt-5 px-5">
                     <i className="fa-solid fa-xmark scale-100 hover:scale-125 transition-transform cursor-pointer" onClick={() => setPopup(!popup)}></i>
                 </div>
 

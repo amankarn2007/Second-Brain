@@ -34,6 +34,12 @@ export function Sidebar(props: sidebarInterface) {
                 <SidebarContent title="Links" icon={<span className="material-symbols-outlined">link</span>} />
 
                 <SidebarContent title="Tags" icon={<i className="fa-solid fa-hashtag"></i>} />
+
+                <SidebarContent 
+                    title="Search Brains" 
+                    icon={<i className="fa-brands fa-searchengin"></i> } 
+                    onClick={() => console.log("search clicked")}    
+                />
             </div>
         </div> : <div></div>
     )
@@ -42,11 +48,12 @@ export function Sidebar(props: sidebarInterface) {
 interface sidebarProps {
     title: string, 
     icon: React.ReactNode
+    onClick?: () => void
 }
 
-function SidebarContent({title, icon}: sidebarProps) {
+function SidebarContent({title, icon, onClick}: sidebarProps) {
     return(
-        <div className="flex items-center text-xl py-3 px-8 hover:bg-blue-50 rounded-xl">  
+        <div className="flex items-center text-xl py-3 px-8 hover:bg-blue-50 rounded-xl" onClick={onClick}>  
             { icon }
             <p className="pl-4"> { title } </p>
         </div>

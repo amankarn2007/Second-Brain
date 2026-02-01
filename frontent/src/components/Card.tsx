@@ -1,5 +1,6 @@
 import axios from "axios";
 import { BACKEND_URL } from "../Config";
+import { type Dispatch, type SetStateAction } from "react";
 
 interface cardProps {
     projectName: string,
@@ -8,11 +9,20 @@ interface cardProps {
     tags?: string,
     type: "notes" | "youtube" | "x",
     link?: string,
-    id? : string,
+    id : string,
     refresh: () => void,
+    setSignleShare? : Dispatch<SetStateAction<boolean>>;
+    setContentId : Dispatch<SetStateAction<string>>;
 }
 
 function Card(props: cardProps) {
+
+    async function noteShare() { //share button pe click hone se modal ko req send
+        //@ts-ignore
+        props.setSignleShare(prev => !prev);
+        props.setContentId(props.id)
+        //console.log(props.id);
+    }
     
     async function deleteHandler() {
         try{
@@ -41,8 +51,9 @@ function Card(props: cardProps) {
                     <p className="px-2"> { props.projectName } </p>
                 </div>
                 <div className="flex justify-center items-center cursor-pointer">
-                    <i className="fa-solid fa-share-nodes opacity-70 hover:opacity-100"></i>
-                    <span className="material-symbols-outlined px-2 opacity-70 hover:opacity-100" 
+                    <i className="fa-solid fa-share-nodes opacity-70 hover:opacity-100 scale-100 hover:scale-120 transition-transform" onClick={noteShare}></i>
+
+                    <span className="material-symbols-outlined px-2 opacity-70 hover:opacity-100 scale-100 hover:scale-120 transition-transform" 
                     onClick={deleteHandler}>delete</span>
                 </div>
             </div>
@@ -61,7 +72,7 @@ function Card(props: cardProps) {
 
             {  props.type === "youtube" &&
                 <iframe className="w-full h-38 rounded-lg" 
-                    src={props.link ? linkEbeder({ link: props.link }) : ""}
+                    src={props.link ? linkEbeder({ link: props.link }) : undefined}
                     //https://youtu.be/xTtL8E4LzTQ?si=C2q0F74INzJ8I1HW
                     title="YouTube video player"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 

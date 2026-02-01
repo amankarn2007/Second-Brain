@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import LandingPage from "./pages/LandingPage";
+import { ProtectedRoute } from "./ProtectedRoute";
 
 
 function App() {
@@ -11,8 +12,13 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
+          <Route path="/dashboard" element={
+            //ProtectedRoute check the token and then render Dashboard
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          } />
           <Route path="/" element={<LandingPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
         </Routes>

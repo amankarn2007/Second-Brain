@@ -8,6 +8,11 @@ const LinkSchema = new Schema({
         ref: "User",
         unique: true,
         required: true
+    },
+    contentId: {
+        type: Schema.Types.ObjectId,
+        ref: "Content",
+        unique: true,
     }
 })
 

@@ -12,7 +12,7 @@ interface ShareInterfase{
 function ShareContentModal({share, setShare}: ShareInterfase){
     const [loader, setLoader] = useState(false);
     const [link, setLink] = useState();
-    const [copyState, setCopyState] = useState(false);
+    //const [copyState, setCopyState] = useState(false); //to show flash, link is copied
 
     async function sendBackendReq() { //send backend req to genrate link
         setLoader(true);

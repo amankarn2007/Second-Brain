@@ -6,7 +6,6 @@ const contentTypes = ['image', 'video', 'audio', 'article'];
 const contentSchema = new Schema({
     link: { 
         type: String,
-        required: true 
     },
     type: { 
         type: String,
@@ -16,6 +15,12 @@ const contentSchema = new Schema({
     title: { 
         type: String,
         required: true
+    },
+    heading: {
+        type: String,
+    },
+    description: {
+        type: String,
     },
     tags: [{type: String}],
     userId: {
