@@ -34,7 +34,7 @@ function Card(props: cardProps) {
     }
 
     return(
-        <div className="h-98 w-72 bg-white rounded-2xl px-4 mr-12 mt-5 border border-gray-300 shadow-xl">
+        <div className="h-98 w-72 bg-white rounded-2xl px-4 mr-12 mt-5 mb-5 border border-gray-300 shadow-xl hover:shadow-blue-300">
             <div className="flex justify-between items-center py-3 text-lg">
                 <div className="flex items-center ">
                     <i className="fa-regular fa-file-lines"></i>

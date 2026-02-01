@@ -118,32 +118,33 @@ app.delete("/api/v1/content/:contentId", isLogedin, async (req, res) => {
 
 })
 
-app.post("/api/v1/brain/share", isLogedin, async(req, res) => {
+app.post("/api/v1/brain/share", isLogedin, async(req, res) => { //used to genrate the link
     const share = req.body.share;
 
     if(share) {
 
-        const existingLink = await LinkModel.findOne({ 
+        const existingLink = await LinkModel.findOne({ //agar link already gen hai
             userId: (req as any).userId 
         })
 
         if(existingLink){
             return res.json({ 
-                message: "Link already exists =>  /brain/" + existingLink.hash 
+                message: "Link already exists",
+                link: "/brain/" + existingLink.hash 
             });
         }
 
-        const hashedString = randomString(10);
+        const hashedString = randomString(15);
         await LinkModel.create({ //LinkModel needs userId and hashed link
             userId: (req as any).userId,
             hash: hashedString,
         })
 
         res.json({
-            message: "/brain/" + hashedString,
+            link: "/brain/" + hashedString,
         })
 
-    } else {
+    } else { //if share is false, delete old link
         await LinkModel.deleteOne({
             userId: (req as any).userId,
         })
@@ -165,7 +166,7 @@ app.get("/api/v1/brain/:shareLink",  async (req, res) => {
         })
     }
 
-    const content = await contentModel.find({ //link se content find
+    const content = await contentModel.find({ //link se sare content find
         userId: link.userId,
     })
 

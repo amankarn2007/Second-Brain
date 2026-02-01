@@ -6,8 +6,9 @@ interface ButtonProps {
     text: string;
     startIcon?: ReactElement;
     endIcon?: ReactElement;
-    onClick: () => void;
+    onClick? : () => void;
     width?: number;
+    iconHover? : boolean
 }
 
 const variantStyle = {
@@ -31,14 +32,15 @@ function Button(props: ButtonProps) {
 
             <div className="w-full flex justify-center items-center font-">
                 { props.startIcon &&
-                    <div className="flex items-center mr-2"> 
+                    <div className={`flex items-center mr-2 scale-100 ${props.iconHover ? "hover:scale-125" : ""}`}> 
                         { props.startIcon } 
                     </div>
                 }
+
                 { props.text }
 
                 { props.endIcon && (
-                    <div className="flex items-center ml-2"> 
+                    <div className={`flex items-center ml-2 scale-100 ${props.iconHover ? "hover:scale-125" : ""}`}> 
                         {props.endIcon} 
                     </div>
                 )}

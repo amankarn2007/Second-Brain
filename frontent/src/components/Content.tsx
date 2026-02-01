@@ -7,7 +7,7 @@ interface ContentInterface{
 
 function Content({content, refresh}: ContentInterface) {
   
-  console.log(content);
+  //console.log(content);
 
   return(
     <div className="pt-2 px-12 flex flex-wrap">
