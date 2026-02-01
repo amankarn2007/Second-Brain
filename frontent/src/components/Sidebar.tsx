@@ -1,5 +1,6 @@
 import type { Dispatch, SetStateAction } from "react"
 import type React from "react"
+import { useNavigate } from "react-router-dom";
 
 interface sidebarInterface{
     isOpen: boolean;
@@ -7,6 +8,8 @@ interface sidebarInterface{
 }
 
 export function Sidebar(props: sidebarInterface) {
+    const navigate = useNavigate();
+
     return(
         props.isOpen ?
         <div className="h-screen w-80 bg-white flex flex-col z-1 shadow-xl">
@@ -38,7 +41,7 @@ export function Sidebar(props: sidebarInterface) {
                 <SidebarContent 
                     title="Search Brains" 
                     icon={<i className="fa-brands fa-searchengin"></i> } 
-                    onClick={() => console.log("search clicked")}    
+                    onClick={() => navigate("/findbrain")}    
                 />
             </div>
         </div> : <div></div>

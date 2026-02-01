@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import LandingPage from "./pages/LandingPage";
 import { ProtectedRoute } from "./ProtectedRoute";
+import FindBrain from "./pages/FindBrain";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+          <Route path="findbrain" element={<FindBrain />} />
         </Routes>
       </BrowserRouter>
     </div>
