@@ -120,6 +120,20 @@ app.delete("/api/v1/content/:contentId", isLogedin, async (req, res) => {
 
 })
 
+app.get("/api/v1/brain/getLinks", isLogedin, async(req, res) => {
+    try{
+        //@ts-ignore
+        const userId = req.userId;
+
+        const response = await LinkModel.find({userId: userId});
+        res.send(response);
+
+    } catch(err) {
+        res.status(400).send("error in fetching links")
+    }
+
+})
+
 app.post("/api/v1/brain/share", isLogedin, async(req, res) => { //used to genrate the link
     const share = req.body.share;
 

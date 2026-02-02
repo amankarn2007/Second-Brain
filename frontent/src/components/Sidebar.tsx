@@ -1,6 +1,8 @@
+import axios from "axios";
 import type { Dispatch, SetStateAction } from "react"
 import type React from "react"
 import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../Config";
 
 interface sidebarInterface{
     isOpen: boolean;
@@ -9,6 +11,7 @@ interface sidebarInterface{
     setVideoFilter: Dispatch<SetStateAction<boolean>>;
     setNotesFilter: Dispatch<SetStateAction<boolean>>;
     setLinksFilter: Dispatch<SetStateAction<boolean>>;
+    setAllLinks: Dispatch<SetStateAction<any[]>>;
 }
 
 export function Sidebar(props: sidebarInterface) {
@@ -29,8 +32,16 @@ export function Sidebar(props: sidebarInterface) {
         props.setNotesFilter((prev) => !prev)
     }
 
-    function filterLinks() {
+    async function filterLinks() {
         console.log("Links filter");
+        const response = await axios.get(`${BACKEND_URL}/api/v1/brain/getLinks`, {
+            "headers": {
+                "Authorization": localStorage.getItem("token")
+            }
+        })
+        props.setAllLinks(response.data); //sare data set kar do
+        console.log(response.data); //.hash = link
+        
         props.setLinksFilter((prev) => !prev);
     }
 

@@ -11,6 +11,7 @@ interface ContentInterface{
   filterVideos: boolean;
   filterNotes: boolean;
   filterLinks: boolean;
+  allLinks: any[];
 }
 
 function Content(props: ContentInterface) {
@@ -81,7 +82,12 @@ function Content(props: ContentInterface) {
               )
 
         ): props.filterLinks ? (
-          <ShowLink />
+            props.allLinks.map((data: any) => (
+              <ShowLink 
+                link={`/brain/notes/${data.hash}`} 
+                key={data._id}  
+              />
+            ))
 
         ) : props.content && props.content.length > 0 ? (
             props.content.map((data: any) => (

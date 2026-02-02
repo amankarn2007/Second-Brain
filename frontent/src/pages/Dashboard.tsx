@@ -21,6 +21,7 @@ function Dashboard() {
   const [videoFilter, setVideoFilter] = useState(false); //video filter
   const [notesFilter, setNotesFilter] = useState(false); //notes filter
   const [linksFilter, setLinksFilter] = useState(false); //links filter
+  const [allLinks, setAllLinks] = useState<any[]>([]); //sare link store karenge, in array
 
   return (
     <div className="h-screen w-full flex overflow-hidden">
@@ -28,12 +29,30 @@ function Dashboard() {
       <CreateContentModal popup={popup} setPopup={setPopup} refresh={fetch} />
       <ShareNotesLink singleShare={singleShare} setSignleShare={setSignleShare} contentId={contentId} />
 
-      <Sidebar isOpen={open} setOpen={setOpen} setFilterX={setFilterX} setVideoFilter={setVideoFilter} setNotesFilter={setNotesFilter} setLinksFilter={setLinksFilter}/>
+      <Sidebar 
+        isOpen={open} 
+        setOpen={setOpen} 
+        setFilterX={setFilterX} 
+        setVideoFilter={setVideoFilter} 
+        setNotesFilter={setNotesFilter} 
+        setLinksFilter={setLinksFilter}
+        setAllLinks={setAllLinks}
+      />
 
       <main className="flex-1 bg-white flex-col px-2 overflow-y-scroll">
         <Header isOpen={open} setOpen={setOpen} setPopup={setPopup} setShare={setShare} />
-        
-        <Content content={content} refresh={fetch}  setSignleShare={setSignleShare} setContentId={setContentId} filterTweet={filterX} filterVideos={videoFilter} filterNotes={notesFilter} filterLinks={linksFilter}/>
+
+        <Content 
+          content={content} 
+          refresh={fetch}  
+          setSignleShare={setSignleShare} 
+          setContentId={setContentId} 
+          filterTweet={filterX} 
+          filterVideos={videoFilter} 
+          filterNotes={notesFilter} 
+          filterLinks={linksFilter}
+          allLinks={allLinks}
+        />
       </main>
 
     </div>

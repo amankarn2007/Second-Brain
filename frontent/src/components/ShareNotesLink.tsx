@@ -37,7 +37,7 @@ export function ShareNotesLink({singleShare, setSignleShare, contentId}: sharePr
         //console.log("copy clicked");
         try{
             await navigator.clipboard.writeText(link);
-            alert();
+            alert("copied");
             
         } catch(err) {
             console.log("error in coping link", err);
