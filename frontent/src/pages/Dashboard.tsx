@@ -17,6 +17,10 @@ function Dashboard() {
 
   const { content, fetch } = FetchContent(); //to fetch again when new content added. we've to pass fetch through props. here we'll access content and pass in "Content" bcs if we access content in "Content" then refresh will re-render only "Dashboard component", not our "Content component".
   
+  const [filterX, setFilterX] = useState(false); //tweet filter
+  const [videoFilter, setVideoFilter] = useState(false); //video filter
+  const [notesFilter, setNotesFilter] = useState(false); //notes filter
+  const [linksFilter, setLinksFilter] = useState(false); //links filter
 
   return (
     <div className="h-screen w-full flex overflow-hidden">
@@ -24,11 +28,12 @@ function Dashboard() {
       <CreateContentModal popup={popup} setPopup={setPopup} refresh={fetch} />
       <ShareNotesLink singleShare={singleShare} setSignleShare={setSignleShare} contentId={contentId} />
 
-      <Sidebar isOpen={open} setOpen={setOpen} />
+      <Sidebar isOpen={open} setOpen={setOpen} setFilterX={setFilterX} setVideoFilter={setVideoFilter} setNotesFilter={setNotesFilter} setLinksFilter={setLinksFilter}/>
 
       <main className="flex-1 bg-white flex-col px-2 overflow-y-scroll">
         <Header isOpen={open} setOpen={setOpen} setPopup={setPopup} setShare={setShare} />
-        <Content content={content} refresh={fetch}  setSignleShare={setSignleShare} setContentId={setContentId} />
+        
+        <Content content={content} refresh={fetch}  setSignleShare={setSignleShare} setContentId={setContentId} filterTweet={filterX} filterVideos={videoFilter} filterNotes={notesFilter} filterLinks={linksFilter}/>
       </main>
 
     </div>

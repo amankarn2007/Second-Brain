@@ -89,7 +89,7 @@ function Main() {
                                 key={data._id}
                             />
                         ))
-                    ) : <p className="mt-50 mb-68 text-2xl"> No content avilable</p>
+                    ) : <p className="mt-50 mb-68 text-2xl"> Search content with link</p>
                 }
             </div> 
         </div>

@@ -5,10 +5,34 @@ import { useNavigate } from "react-router-dom";
 interface sidebarInterface{
     isOpen: boolean;
     setOpen: Dispatch<SetStateAction<boolean>>;
+    setFilterX: Dispatch<SetStateAction<boolean>>;
+    setVideoFilter: Dispatch<SetStateAction<boolean>>;
+    setNotesFilter: Dispatch<SetStateAction<boolean>>;
+    setLinksFilter: Dispatch<SetStateAction<boolean>>;
 }
 
 export function Sidebar(props: sidebarInterface) {
     const navigate = useNavigate();
+
+    function xContent() {
+        //console.log("tweeter")
+        props.setFilterX((prev) => !prev); //send this boolean to dashboard, and then content
+    }
+
+    function videoContent() {
+        //console.log("youtube video");
+        props.setVideoFilter((prev) => !prev);
+    }
+
+    function notesFilter() {
+        //console.log("notes filter");
+        props.setNotesFilter((prev) => !prev)
+    }
+
+    function filterLinks() {
+        console.log("Links filter");
+        props.setLinksFilter((prev) => !prev);
+    }
 
     return(
         props.isOpen ?
@@ -28,13 +52,13 @@ export function Sidebar(props: sidebarInterface) {
 
             {/*sidebar content*/}
             <div className="flex flex-col mt-5 cursor-pointer">
-                <SidebarContent title="Tweets" icon={<i className="fa-brands fa-twitter"></i>} />
+                <SidebarContent title="Tweets" icon={<i className="fa-brands fa-twitter"></i>}  onClick={xContent}/>
 
-                <SidebarContent title="Videos" icon={<i className="fa-brands fa-youtube"></i>} />
+                <SidebarContent title="Videos" icon={<i className="fa-brands fa-youtube"></i>} onClick={videoContent} />
 
-                <SidebarContent title="Documents" icon={<i className="fa-regular fa-file-lines"></i>} />
+                <SidebarContent title="Documents" icon={<i className="fa-regular fa-file-lines"></i>} onClick={notesFilter} />
 
-                <SidebarContent title="Links" icon={<span className="material-symbols-outlined">link</span>} />
+                <SidebarContent title="Links" icon={<span className="material-symbols-outlined">link</span>} onClick={filterLinks}/>
 
                 <SidebarContent title="Tags" icon={<i className="fa-solid fa-hashtag"></i>} />
 
