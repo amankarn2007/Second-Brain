@@ -14,6 +14,17 @@ const app = express();
 app.use(express.json());
 app.use(cors()); //accept api req from frontent
 
+app.get("/", (req, res) => {
+    res.json({
+        message: "working properly get req on / ",
+        data: "testing data",
+        creater: {
+            name: "aman karn",
+            purpose: "testing"
+        }
+    })
+})
+
 app.post("/api/v1/signup", async (req, res) => {
     try{
         const { username, password } = req.body;
